@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="title desc">
+  <title id="title">Profile image placeholder</title>
+  <desc id="desc">Abstract purple and green cloud infrastructure illustration.</desc>
+  <rect width="600" height="600" fill="#e9e7ff"/>
+  <circle cx="300" cy="240" r="112" fill="#635bff" opacity=".9"/>
+  <path d="M128 492c12-112 84-168 172-168s160 56 172 168" fill="#11a683" opacity=".82"/>
+  <path d="M82 112h436M82 142h218" stroke="#111827" stroke-width="12" stroke-linecap="round" opacity=".14"/>
+</svg>

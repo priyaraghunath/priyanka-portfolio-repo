@@ -1,0 +1,7 @@
+import { Component } from '@angular/core';
+import { RESUME_DATA } from '../../data/resume.data';
+
+@Component({ selector: 'app-projects', standalone: true, template: `
+  <section id="projects" class="section section--muted" aria-labelledby="projects-title"><div class="container"><div class="section-heading"><p class="eyebrow">05 / Projects</p><h2 id="projects-title">Selected work.</h2></div>@if (data.projects.length) {<div class="project-grid">@for (project of data.projects; track project.name) {<article class="project-card"><h3>{{ project.name }}</h3><p>{{ project.description }}</p><div class="badge-list">@for (tech of project.technologies; track tech) {<span class="badge">{{ tech }}</span>}</div><ul>@for (item of project.contributions; track item) {<li>{{ item }}</li>}</ul><div class="card-links">@if (project.githubUrl) {<a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer">GitHub ↗</a>}@if (project.liveDemoUrl) {<a [href]="project.liveDemoUrl" target="_blank" rel="noopener noreferrer">Live demo ↗</a>}</div></article>}</div>} @else {<div class="empty-state"><span aria-hidden="true">⌁</span><h3>Projects coming soon</h3><p>Project details were not included in the supplied resume.</p></div>}</div></section>
+` })
+export class ProjectsComponent { readonly data = RESUME_DATA; }

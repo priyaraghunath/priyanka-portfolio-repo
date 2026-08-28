@@ -1,0 +1,14 @@
+import { Component, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RESUME_DATA } from '../../data/resume.data';
+
+@Component({ selector: 'app-contact', standalone: true, imports: [ReactiveFormsModule], template: `
+  <section id="contact" class="section contact-section" aria-labelledby="contact-title"><div class="container contact-grid"><div><p class="eyebrow">08 / Contact</p><h2 id="contact-title">Let’s build something reliable.</h2><p class="large-copy">Interested in cloud infrastructure, DevOps, or platform reliability? Send a message and I’ll get back to you.</p><div class="contact-details"><a [href]="'mailto:' + data.personal.email">{{ data.personal.email }}</a>@if (data.personal.phone) {<a [href]="'tel:' + data.personal.phone">{{ data.personal.phone }}</a>}<span>{{ data.personal.location }}</span>@if (data.personal.linkedin) {<a [href]="data.personal.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}</div></div><form class="contact-form" [formGroup]="form" (ngSubmit)="submit()" novalidate><label for="name">Name</label><input id="name" type="text" formControlName="name" autocomplete="name" [attr.aria-invalid]="invalid('name')" />@if (invalid('name')) {<small class="error">Please enter your name.</small>}<label for="email">Email</label><input id="email" type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="invalid('email')" />@if (invalid('email')) {<small class="error">Enter a valid email address.</small>}<label for="message">Message</label><textarea id="message" rows="5" formControlName="message" [attr.aria-invalid]="invalid('message')"></textarea>@if (invalid('message')) {<small class="error">Please enter a message.</small>}<button class="button button--primary" type="submit">Send message</button>@if (submitted()) {<p class="success" role="status">Thanks — your message is ready to be connected to a form service.</p>}</form></div></section>
+` })
+export class ContactComponent {
+  readonly data = RESUME_DATA;
+  readonly submitted = signal(false);
+  readonly form = new FormGroup({ name: new FormControl('', { nonNullable: true, validators: [Validators.required] }), email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }), message: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(10)] }) });
+  invalid(control: 'name' | 'email' | 'message'): boolean { const field = this.form.controls[control]; return field.invalid && (field.touched || field.dirty); }
+  submit(): void { this.submitted.set(false); if (this.form.invalid) { this.form.markAllAsTouched(); return; } this.submitted.set(true); this.form.reset(); }
+}
